@@ -1,6 +1,4 @@
 # Jeu de runes
-Jeu de mémorisation. Retourner toutes les stèles par paire en cliquant dessus.
+Jeu de mÃ©morisation. Retourner toutes les stÃ¨les par paire en cliquant dessus.
 
-
-
-Télécharger l'executable dist/JeuDeRunes.jar .
+TÃ©lÃ©charger l'executable dist/JeuDeRunes.jar .
