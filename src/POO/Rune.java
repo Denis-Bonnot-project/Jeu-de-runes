@@ -28,10 +28,15 @@ public class Rune extends javax.swing.JPanel {
     }
   
     
-    // Méthode métier
+    // Méthodes métier
     private void afficheRune(String url){
         java.net.URL imageURL = Main.class.getResource(url);
         ImageIcon icon = new ImageIcon(imageURL);
+        if (url.equals("/images/stele.png")){
+            java.awt.Image imagePhoto=icon.getImage();
+            imagePhoto=imagePhoto.getScaledInstance(88,112,java.awt.Image.SCALE_SMOOTH);
+            icon.setImage(imagePhoto);
+        }
         runeLbl.setIcon(icon);
      }
 
@@ -57,26 +62,29 @@ public class Rune extends javax.swing.JPanel {
 
         runeLbl = new javax.swing.JLabel();
 
-        setPreferredSize(new java.awt.Dimension(57, 91));
+        setPreferredSize(new java.awt.Dimension(130, 160));
 
+        runeLbl.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        runeLbl.setAlignmentY(0.0F);
+        runeLbl.setMaximumSize(new java.awt.Dimension(200, 200));
         runeLbl.setMinimumSize(new java.awt.Dimension(57, 91));
-        runeLbl.setPreferredSize(new java.awt.Dimension(57, 91));
+        runeLbl.setPreferredSize(new java.awt.Dimension(130, 160));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addComponent(runeLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(runeLbl, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+                .addContainerGap(36, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(runeLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(42, Short.MAX_VALUE)
+                .addComponent(runeLbl, javax.swing.GroupLayout.DEFAULT_SIZE, 119, Short.MAX_VALUE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 

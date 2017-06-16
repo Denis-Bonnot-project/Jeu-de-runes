@@ -65,7 +65,7 @@ public class Main extends javax.swing.JFrame {
     private void afficherRunesAvecEvt(){
         
         for (int i=0; i<nbRunes;i++){
-        boiteRunes.add(listeRunes[i]);
+            boiteRunes.add(listeRunes[i]);
         
             // Créer un écouteur d'événement sur une rune
             listeRunes[i].addMouseListener(new java.awt.event.MouseAdapter() {
@@ -78,9 +78,10 @@ public class Main extends javax.swing.JFrame {
     }
     
     private void runeMouseReleased(java.awt.event.MouseEvent evt){
+        nbTotalClicks++;
         runeCliquee=(Rune) evt.getSource();
-        filResultats=filResultats+"Numéro et nom de la rune: "+runeCliquee.getNomRune()+"\n";
-        resultatsTfd.setText(filResultats);
+        filResultats=filResultats+runeCliquee.getNomRune().substring(0,2)+"       "+runeCliquee.getNomRune().substring(3)+"\n";
+        resultatsTfd1.setText(filResultats);
 
        
 //       if (runeCliquee.isCoteDos()) runeCliquee.tournerVersFace();
@@ -115,10 +116,9 @@ public class Main extends javax.swing.JFrame {
            else {
                 deuxiemeRune.removeMouseListener(deuxiemeRune.getMouseListeners()[0]);
                 nbPairesRetournees+=2;
-                filResultats=filResultats+"nbPairesRetournees: "+nbPairesRetournees/2+"\n";
-                resultatsTfd.setText(filResultats);
                 
                 if (nbPairesRetournees>=nbRunes) {
+                    resultatsTfd2.setText(  "Bravo! Vous avez retourné toutes les stèles en "+nbTotalClicks/2+" essais.");
                     new Message(this, true) ;
                     retournerToutesLesRunes();
                     boiteRunes.removeAll();
@@ -126,7 +126,9 @@ public class Main extends javax.swing.JFrame {
                     nbPairesRetournees=0;
                 }
            }
-       }
+        }
+        resultatsTfd2.setText(  "Nombre de paires retournées: "+nbPairesRetournees/2+"\n"+
+                                "Nombre d'essais: "+nbTotalClicks/2);
     };                
 
     private int auHasardEntre(int min, int max){
@@ -163,42 +165,63 @@ public class Main extends javax.swing.JFrame {
     private void initComponents() {
 
         boiteRunes = new javax.swing.JPanel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        resultatsTfd = new javax.swing.JTextArea();
+        resultatsPnl1 = new javax.swing.JScrollPane();
+        resultatsTfd1 = new javax.swing.JTextArea();
+        resultatsPnl2 = new javax.swing.JScrollPane();
+        resultatsTfd2 = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Jeu de runes");
+        setPreferredSize(new java.awt.Dimension(1700, 1000));
 
-        boiteRunes.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Jeu de runes - retourner toutes les stèles, paire par paire, en cliquant dessus", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 1, 24))); // NOI18N
+        boiteRunes.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "retourner toutes les stèles, paire par paire, en cliquant dessus", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Tahoma", 1, 24))); // NOI18N
         boiteRunes.setMinimumSize(new java.awt.Dimension(800, 500));
-        boiteRunes.setPreferredSize(new java.awt.Dimension(1300, 600));
+        boiteRunes.setPreferredSize(new java.awt.Dimension(1600, 700));
         boiteRunes.setLayout(new java.awt.GridLayout(4, 12));
 
-        jScrollPane2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        resultatsPnl1.setBackground(new java.awt.Color(216, 216, 216));
+        resultatsPnl1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Numéro et nom de la rune", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, new java.awt.Font("Calibri", 0, 18))); // NOI18N
+        resultatsPnl1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        resultatsTfd.setBackground(new java.awt.Color(216, 216, 216));
-        resultatsTfd.setColumns(20);
-        resultatsTfd.setFont(new java.awt.Font("Copperplate Gothic Bold", 0, 18)); // NOI18N
-        resultatsTfd.setRows(5);
-        jScrollPane2.setViewportView(resultatsTfd);
+        resultatsTfd1.setEditable(false);
+        resultatsTfd1.setBackground(new java.awt.Color(216, 216, 216));
+        resultatsTfd1.setColumns(20);
+        resultatsTfd1.setFont(new java.awt.Font("Copperplate Gothic Bold", 0, 24)); // NOI18N
+        resultatsTfd1.setRows(5);
+        resultatsTfd1.setAutoscrolls(false);
+        resultatsTfd1.setMargin(new java.awt.Insets(1, 250, 1, 1));
+        resultatsPnl1.setViewportView(resultatsTfd1);
+
+        resultatsTfd2.setEditable(false);
+        resultatsTfd2.setBackground(new java.awt.Color(216, 216, 216));
+        resultatsTfd2.setColumns(20);
+        resultatsTfd2.setFont(new java.awt.Font("Copperplate Gothic Bold", 1, 18)); // NOI18N
+        resultatsTfd2.setRows(5);
+        resultatsPnl2.setViewportView(resultatsTfd2);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(31, 31, 31)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 876, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(boiteRunes, javax.swing.GroupLayout.PREFERRED_SIZE, 1286, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addGap(40, 40, 40)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(resultatsPnl1, javax.swing.GroupLayout.PREFERRED_SIZE, 715, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(resultatsPnl2, javax.swing.GroupLayout.PREFERRED_SIZE, 743, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(boiteRunes, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 1600, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(46, Short.MAX_VALUE)
-                .addComponent(boiteRunes, javax.swing.GroupLayout.PREFERRED_SIZE, 572, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(25, Short.MAX_VALUE)
+                .addComponent(boiteRunes, javax.swing.GroupLayout.PREFERRED_SIZE, 700, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(resultatsPnl1, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
+                    .addComponent(resultatsPnl2))
                 .addGap(29, 29, 29))
         );
 
@@ -248,13 +271,16 @@ public class Main extends javax.swing.JFrame {
     private static int nbRunes=48;
     private Rune runeCliquee, premiereRune, deuxiemeRune;
     private int nbClick=0;
+    private int nbTotalClicks=0;
     private boolean aRetourner=false; 
     private int nbPairesRetournees=0;
     private String [] nomsRunes;
     private String filResultats="";
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel boiteRunes;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea resultatsTfd;
+    private javax.swing.JScrollPane resultatsPnl1;
+    private javax.swing.JScrollPane resultatsPnl2;
+    private javax.swing.JTextArea resultatsTfd1;
+    private javax.swing.JTextArea resultatsTfd2;
     // End of variables declaration//GEN-END:variables
 }
